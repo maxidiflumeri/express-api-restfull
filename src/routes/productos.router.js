@@ -28,8 +28,7 @@ router.get('/:id', (req, res, next) => {
     next()
 })
 
-router.post('/', (req, res, next) => {
-    console.log(req.body)
+router.post('/', (req, res, next) => {    
     try {
         const { error } = ProductosSchema.validate(req.body)
         if (error) {
