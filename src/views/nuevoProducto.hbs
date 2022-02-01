@@ -1,0 +1,23 @@
+<div class="jumbotron mt-4 justify-content-center">
+    <h1 class="display-4"> Nuevo Producto</h1>
+    <form action="/api/productos" method="POST">
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Titulo</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" aria-describedby="titleHelp" required>
+            <div id="titleHelp" class="form-text text-danger">Campo obligatorio.</div>
+        </div>
+        <div class="mb-3">
+            <label for="precio" class="form-label">Precio</label>
+            <input type="number" class="form-control" id="precio"  name="precio" aria-describedby="precioHelp" required>
+            <div id="precioHelp" class="form-text text-danger">Campo obligatorio.</div>
+        </div>
+        <div class="mb-3">
+            <label for="logo" class="form-label">Logo</label>
+            <input type="text" class="form-control" id="logo" name="logo" aria-describedby="logoHelp" required>
+            <div id="logoHelp" class="form-text text-danger">Campo obligatorio.</div>
+        </div>
+        <div class=" d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Agregar Producto</button>
+        </div>
+    </form>
+</div>

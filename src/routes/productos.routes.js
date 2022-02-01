@@ -1,7 +1,6 @@
-import { Router } from 'express'
-import ProductosSchema from '../models/producto.js'
-
-const productos = []
+const { Router } = require('express')
+const ProductosSchema = require('../models/producto.js')
+const productos = require('../db/productos.js')
 
 const router = Router()
 
@@ -28,19 +27,24 @@ router.get('/:id', (req, res, next) => {
     next()
 })
 
-router.post('/', (req, res, next) => {    
+router.post('/', (req, res, next) => {       
     try {
-        const { error } = ProductosSchema.validate(req.body)
+        const producto = {
+            titulo: req.body.titulo,
+            precio: req.body.precio,
+            logo: req.body.logo
+        }
+        const { error } = ProductosSchema.validate(producto)
         if (error) {
             res.status(400).send({ mensaje: error.message })
         } else {
             if (productos.length == 0) {
-                req.body.id = 1
+                producto.id = 1
             } else {
-                req.body.id = productos[productos.length - 1].id + 1
+                producto.id = productos[productos.length - 1].id + 1
             }
-            productos.push(req.body)
-            res.status(200).send(req.body)
+            productos.push(producto)
+            res.status(200).redirect('/productos')
         }
     } catch (error) {
         res.status(500).send({ mensaje: error.message })
@@ -54,14 +58,19 @@ router.put('/:id', (req, res, next) => {
         if (productoIndex == -1) {
             res.status(401).send({ mensaje: `No existe el producto con el id ${req.params.id}` })
         } else {
-            const { error } = ProductosSchema.validate(req.body)
+            const producto = {
+                titulo: req.body.titulo,
+                precio: req.body.precio,
+                logo: req.body.logo
+            }
+            const { error } = ProductosSchema.validate(producto)
             if (error) {
                 res.status(400).send({ mensaje: error.message })
             } else {
-                productos[productoIndex].titulo = req.body.titulo
-                productos[productoIndex].precio = req.body.precio
-                productos[productoIndex].logo = req.body.logo
-                res.status(200).send(productos[productoIndex])
+                productos[productoIndex].titulo = producto.titulo
+                productos[productoIndex].precio = producto.precio
+                productos[productoIndex].logo = producto.logo
+                res.status(200).redirect('/productos')
             }
         }
     } catch (error) {
@@ -72,13 +81,12 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
     try {
-        const productoIndex = productos.findIndex(prod => prod.id == req.params.id)
-        console.log(productoIndex)
+        const productoIndex = productos.findIndex(prod => prod.id == req.params.id)        
         if (productoIndex == -1) {
             res.status(401).send({ mensaje: `No existe el producto con el id ${req.params.id}` })
         } else {
-            let productoDel = productos.splice(productoIndex, 1)
-            res.status(200).send(productoDel)
+            productos.splice(productoIndex, 1)
+            res.status(200).redirect('/productos')
         }
     } catch (error) {
         res.status(500).send('Ups! hubo un problema! Volve a intentarlo mas tarde.')
@@ -86,4 +94,4 @@ router.delete('/:id', (req, res, next) => {
     next()
 })
 
-export default router
+module.exports = router

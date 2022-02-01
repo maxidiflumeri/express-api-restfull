@@ -1,0 +1,43 @@
+<h1>PRODUCTOS</h1>
+
+{{#if productos}}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Logo</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        {{#each productos}}
+        <tbody>
+            <tr>
+                <th scope="row">{{id}}</th>
+                <td>{{titulo}}</td>
+                <td>$ {{precio}}</td>
+                <td>
+                    <img class="img-thumbnail" src="{{logo}}" alt="logo" width="70">                    
+                </td>
+                <td>
+                    <div class="d-flex">
+                        <form action="/editarProducto/{{id}}?_method=PUT" method="GET">
+                            <button class="btn btn-sm btn-info">Editar</button>
+                        </form>
+                        <form action="/api/productos/{{id}}?_method=DELETE" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="mx-2 btn btn-sm btn-danger">Eliminar</button>
+                        </form>
+                    </div>
+                </td>
+        </tbody>
+        {{/each}}
+    </table>
+{{else}}
+    <div class="d-flex justify-content-center alert alert-warning">
+        No hay productos
+    </div>
+{{/if}}
+
+

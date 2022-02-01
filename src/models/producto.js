@@ -1,4 +1,4 @@
-import Joi from 'joi'
+const Joi = require('joi')
 
 const ProductosSchema = Joi.object({
     titulo: Joi.string().required(),
@@ -6,7 +6,7 @@ const ProductosSchema = Joi.object({
     logo: Joi.string().required()
 })
 
-export default ProductosSchema
+module.exports = ProductosSchema
 
 
 
