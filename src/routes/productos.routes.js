@@ -40,7 +40,7 @@ router.post('/', (req, res, next) => {
             res.status(400).send({ mensaje: error.message })
         } else {
             productosController.createProduct(producto)
-            res.status(200).redirect('/productos')
+            res.status(200).redirect('/nuevoProducto')
         }
     } catch (error) {
         res.status(500).send({ mensaje: error.message })
@@ -79,7 +79,7 @@ router.delete('/:id', (req, res, next) => {
         if (producto == -1) {
             res.status(401).send({ mensaje: `No existe el producto con el id ${req.params.id}` })
         } else {
-            res.status(200).redirect('/productos')
+            res.status(200).redirect('/nuevoProducto')
         }
     } catch (error) {
         res.status(500).send('Ups! hubo un problema! Volve a intentarlo mas tarde.')

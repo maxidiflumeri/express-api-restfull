@@ -12,7 +12,7 @@ router.get('/productos', (req, res) => {
 })
 
 router.get('/nuevoProducto', (req, res) => {
-    res.render('nuevoProducto')
+    res.render('nuevoProducto', { productos })
 })
 
 router.get('/editarProducto/:id', (req, res) => {

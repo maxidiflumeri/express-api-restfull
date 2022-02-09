@@ -21,3 +21,24 @@
         </div>
     </form>
 </div>
+
+<h1>PRODUCTOS</h1>
+
+{{#if productos}}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Logo</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="productos"></tbody>
+    </table>
+{{else}}
+    <div class="d-flex justify-content-center alert alert-warning">
+        No hay productos
+    </div>
+{{/if}}
