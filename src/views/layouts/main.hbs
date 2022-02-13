@@ -30,7 +30,9 @@
 
     <script>
         const socket = io.connect();
+
         function render(data) {
+            console.log(data)
             const html = data.map((elem, index) => {
                 return (`                
                     <tr>
@@ -51,11 +53,38 @@
                                 </form>
                             </div>
                         </td>
+                    </tr>
                 ` )
             }).join(" ");
             document.getElementById('productos').innerHTML = html;
         }
+
+        function renderChat(data) {
+            if (data.length > 0) {
+                const html = data.map((elem, index) => {
+                    return (`                
+                    <strong>${elem.author}</strong>:
+                    <em>${elem.text}</em> </div>
+                    <br>                    
+                ` )
+                }).join(" ");
+                document.getElementById('mensajes').innerHTML = html;
+            }
+        }
+
+        function addMessage(e) {
+            const mensaje = {
+                author: document.getElementById('username').value,
+                text: document.getElementById('texto').value
+            };
+            socket.emit('new-message', mensaje);
+            socket.on('mensajes', function (data) { renderChat(data); });
+            document.getElementById('texto').value = ""
+            return false;
+        }
+
         socket.on('productos', function (data) { render(data); });
+        socket.on('mensajes', function (data) { renderChat(data); });
     </script>
 
 </body>

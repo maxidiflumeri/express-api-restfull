@@ -1,4 +1,4 @@
-<div class="jumbotron mt-4 justify-content-center">
+<div class="container mt-4 justify-content-center bg-light pb-3 mb-3">
     <h1 class="display-4"> Nuevo Producto</h1>
     <form action="/api/productos" method="POST">
         <div class="mb-3">
@@ -8,7 +8,7 @@
         </div>
         <div class="mb-3">
             <label for="precio" class="form-label">Precio</label>
-            <input type="number" class="form-control" id="precio"  name="precio" aria-describedby="precioHelp" required>
+            <input type="number" class="form-control" id="precio" name="precio" aria-describedby="precioHelp" required>
             <div id="precioHelp" class="form-text text-danger">Campo obligatorio.</div>
         </div>
         <div class="mb-3">
@@ -16,7 +16,7 @@
             <input type="text" class="form-control" id="logo" name="logo" aria-describedby="logoHelp" required>
             <div id="logoHelp" class="form-text text-danger">Campo obligatorio.</div>
         </div>
-        <div class=" d-flex justify-content-center">
+        <div class=" d-flex justify-content-center mb-3">
             <button type="submit" class="btn btn-primary">Agregar Producto</button>
         </div>
     </form>
@@ -25,7 +25,8 @@
 <h1>PRODUCTOS</h1>
 
 {{#if productos}}
-    <table class="table">
+<div class="container">
+    <table class="table mb-3">
         <thead>
             <tr>
                 <th scope="col">Id</th>
@@ -37,8 +38,20 @@
         </thead>
         <tbody id="productos"></tbody>
     </table>
-{{else}}
+    {{else}}
     <div class="d-flex justify-content-center alert alert-warning">
         No hay productos
     </div>
+</div>
 {{/if}}
+<div class="rounded container bg-light">
+    <div class="container">
+        <h1>Chat</h1>
+        <form onsubmit="return addMessage(this)">
+            <input class="form-control w-25 mb-2" type="text" id="username" placeholder="Tu Nombre">
+            <input class="form-control w-25 mb-2" type="text" id="texto" placeholder="Cuéntanos algo...">
+            <input class="btn btn-primary" type="submit" value="Enviar">
+        </form>
+        <div class="mt-3" id="mensajes"></div>
+    </div>
+</div>

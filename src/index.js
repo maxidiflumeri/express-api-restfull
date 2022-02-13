@@ -5,20 +5,28 @@ const path = require('path')
 const methodOverride = require('method-override')
 const morgan = require('morgan')
 const productos = require('./db/productos.js')
+const mensajes = require('./db/mensajes.js')
 
 const PORT = 5000
 const app = express()
 
+
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
     console.log('Alguien se conecto');
-    io.sockets.emit('productos', productos);
+    socket.on('new-message', data => {
+        console.log('nuevo mensaje', data)
+        mensajes.push(data);        
+        io.sockets.emit('mensajes', mensajes)    
+    });
+    io.sockets.emit('mensajes', mensajes)    
+    io.sockets.emit('productos', productos)    
 });
 
 app.set('views', path.join(__dirname, 'views'))
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'))
 app.use(morgan('dev'))
 app.use(express.json())
@@ -32,6 +40,6 @@ app.engine('.hbs', exphbs.engine({
 }))
 app.set('view engine', '.hbs')
 
-server.listen(PORT, ()=>{
+server.listen(PORT, () => {
     console.log(`Servidor escuchando en puerto ${PORT}`)
 })
