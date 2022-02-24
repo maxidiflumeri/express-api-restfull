@@ -16,14 +16,12 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 io.on('connection', async function (socket) {
-    console.log('Alguien se conecto');
     socket.on('new-message', async data => {
-        console.log('nuevo mensaje', data)
         await _messagesServices.create(data)
-        io.sockets.emit('mensajes', await _messagesServices.getAll())    
+        io.sockets.emit('mensajes', await _messagesServices.getAll())
     });
-    io.sockets.emit('mensajes', await _messagesServices.getAll())    
-    io.sockets.emit('productos', await _productServices.getAll())    
+    io.sockets.emit('mensajes', await _messagesServices.getAll())
+    io.sockets.emit('productos', await _productServices.getAll())
 });
 
 app.set('views', path.join(__dirname, 'views'))

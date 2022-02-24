@@ -16,32 +16,20 @@ const createProduct = async (product) => {
     await _productServices.create(product)
 }
 
-// const editProduct = (product, id) => {        
-//     const productoIndex = productos.findIndex(prod => prod.id == id)
-//     if (productoIndex == -1) {
-//         return -1
-//     } else {
-//         productos[productoIndex].titulo = product.titulo
-//         productos[productoIndex].precio = product.precio
-//         productos[productoIndex].logo = product.logo
-//         return productos[productoIndex]
-//     }
-// }
+const editProduct = async (product, id) => {
+    const productUpdated = await _productServices.update(product, id)
+    return productUpdated
+}
 
-// const deleteProduct = (id) => {
-//     const productoIndex = productos.findIndex(prod => prod.id == id)
-//     if (productoIndex == -1) {
-//         return -1
-//     } else {
-//         productos.splice(productoIndex, 1)
-//         return 0
-//     }
-// }
+const deleteProduct = async (id) => {
+    const producto = await _productServices.delete(id)
+    return producto
+}
 
 module.exports = {
     getAll,
     getById,
     createProduct,
-    // editProduct,
-    // deleteProduct
+    editProduct,
+    deleteProduct
 }

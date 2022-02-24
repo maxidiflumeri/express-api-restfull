@@ -51,8 +51,8 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
     try {
         const producto = {
-            titulo: req.body.titulo,
-            precio: req.body.precio,
+            title: req.body.title,
+            price: req.body.price,
             logo: req.body.logo
         }
         const { error } = ProductosSchema.validate(producto)
@@ -63,7 +63,7 @@ router.put('/:id', (req, res, next) => {
             if (productResult == -1) {
                 res.status(401).send({ mensaje: `No existe el producto con el id ${req.params.id}` })
             } else {
-                res.status(200).redirect('/productos')
+                res.status(200).redirect('/nuevoProducto')
             }
         }
     } catch (error) {

@@ -1,4 +1,4 @@
-const {Router} = require('express')
+const { Router } = require('express')
 const productsServices = require('../services/product.service')
 const messagesServices = require('../services/messages.service')
 const _productServices = new productsServices('products')
@@ -12,19 +12,18 @@ router.get('/', (req, res) => {
 
 router.get('/productos', async (req, res) => {
     const productos = await _productServices.getAll()
-    res.render('productos', {productos})
+    res.render('productos', { productos })
 })
 
 router.get('/nuevoProducto', async (req, res) => {
     const productos = await _productServices.getAll()
     const mensajes = await _messagesServices.getAll()
-    res.render('nuevoProducto', {productos, mensajes})
+    res.render('nuevoProducto', { productos, mensajes })
 })
 
-router.get('/editarProducto/:id', (req, res) => {
-    const productoIndex = productos.findIndex(prod => prod.id == req.params.id)
-    const producto = productos[productoIndex]
-    res.render('editarProducto', {producto})
+router.get('/editarProducto/:id', async (req, res) => {
+    const producto = await _productServices.getById(req.params.id)
+    res.render('editarProducto', { producto: producto[0] })
 })
 
 module.exports = router

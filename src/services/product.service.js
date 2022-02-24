@@ -21,6 +21,15 @@ class productService{
         return productCreated
     }
 
+    async delete(id){
+        const productDeleted = await productdb(`${this._tableName}`).where('id', id).del()
+        return productDeleted
+    }
+
+    async update(product, id){
+        const productUpdated = await productdb(`${this._tableName}`).where({ id: id }).update(product)
+        return productUpdated
+    }
 }
 
 module.exports = productService
