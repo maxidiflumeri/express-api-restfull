@@ -4,25 +4,26 @@ const exphbs = require('express-handlebars')
 const path = require('path')
 const methodOverride = require('method-override')
 const morgan = require('morgan')
-const productos = require('./db/productos.js')
-const mensajes = require('./db/mensajes.js')
+const productsServices = require('./services/product.service')
+const messagesServices = require('./services/messages.service')
+const _productServices = new productsServices('products')
+const _messagesServices = new messagesServices('messages')
 
 const PORT = 5000
 const app = express()
 
-
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
-io.on('connection', function (socket) {
+io.on('connection', async function (socket) {
     console.log('Alguien se conecto');
-    socket.on('new-message', data => {
+    socket.on('new-message', async data => {
         console.log('nuevo mensaje', data)
-        mensajes.push(data);        
-        io.sockets.emit('mensajes', mensajes)    
+        await _messagesServices.create(data)
+        io.sockets.emit('mensajes', await _messagesServices.getAll())    
     });
-    io.sockets.emit('mensajes', mensajes)    
-    io.sockets.emit('productos', productos)    
+    io.sockets.emit('mensajes', await _messagesServices.getAll())    
+    io.sockets.emit('productos', await _productServices.getAll())    
 });
 
 app.set('views', path.join(__dirname, 'views'))

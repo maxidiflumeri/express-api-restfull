@@ -37,8 +37,8 @@
                 return (`                
                     <tr>
                         <th scope="row">${elem.id}</th>
-                        <td>${elem.titulo}</td>
-                        <td>$ ${elem.precio}</td>
+                        <td>${elem.title}</td>
+                        <td>$ ${elem.price}</td>
                         <td>
                             <img class="img-thumbnail" src="${elem.logo}" alt="logo" width="70">                    
                         </td>
@@ -60,11 +60,12 @@
         }
 
         function renderChat(data) {
+            console.log(data)
             if (data.length > 0) {
                 const html = data.map((elem, index) => {
                     return (`                
-                    <strong>${elem.author}</strong>:
-                    <em>${elem.text}</em> </div>
+                    <strong>${elem.name}</strong>:
+                    <em>${elem.message}</em> </div>
                     <br>                    
                 ` )
                 }).join(" ");
@@ -74,8 +75,8 @@
 
         function addMessage(e) {
             const mensaje = {
-                author: document.getElementById('username').value,
-                text: document.getElementById('texto').value
+                name: document.getElementById('username').value,
+                message: document.getElementById('texto').value
             };
             socket.emit('new-message', mensaje);
             socket.on('mensajes', function (data) { renderChat(data); });

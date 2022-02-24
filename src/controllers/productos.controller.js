@@ -1,49 +1,47 @@
-const productos = require('../db/productos.js')
+const productsServices = require('../services/product.service')
 
-const getAll = () => {
-    return productos
+const _productServices = new productsServices('products')
+
+
+const getAll = async () => {
+    return await _productServices.getAll()
 }
 
-const getById = (id) => {
-    const producto = productos.find(prod => prod.id == id)
+const getById = async (id) => {
+    const producto = await _productServices.getById(id)
     return producto
 }
 
-const createProduct = (product) => {
-    if (productos.length == 0) {
-        product.id = 1
-    } else {
-        product.id = productos[productos.length - 1].id + 1
-    }
-    productos.push(product)
+const createProduct = async (product) => {
+    await _productServices.create(product)
 }
 
-const editProduct = (product, id) => {        
-    const productoIndex = productos.findIndex(prod => prod.id == id)
-    if (productoIndex == -1) {
-        return -1
-    } else {
-        productos[productoIndex].titulo = product.titulo
-        productos[productoIndex].precio = product.precio
-        productos[productoIndex].logo = product.logo
-        return productos[productoIndex]
-    }
-}
+// const editProduct = (product, id) => {        
+//     const productoIndex = productos.findIndex(prod => prod.id == id)
+//     if (productoIndex == -1) {
+//         return -1
+//     } else {
+//         productos[productoIndex].titulo = product.titulo
+//         productos[productoIndex].precio = product.precio
+//         productos[productoIndex].logo = product.logo
+//         return productos[productoIndex]
+//     }
+// }
 
-const deleteProduct = (id) => {
-    const productoIndex = productos.findIndex(prod => prod.id == id)
-    if (productoIndex == -1) {
-        return -1
-    } else {
-        productos.splice(productoIndex, 1)
-        return 0
-    }
-}
+// const deleteProduct = (id) => {
+//     const productoIndex = productos.findIndex(prod => prod.id == id)
+//     if (productoIndex == -1) {
+//         return -1
+//     } else {
+//         productos.splice(productoIndex, 1)
+//         return 0
+//     }
+// }
 
 module.exports = {
     getAll,
     getById,
     createProduct,
-    editProduct,
-    deleteProduct
+    // editProduct,
+    // deleteProduct
 }

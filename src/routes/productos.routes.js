@@ -4,9 +4,9 @@ const productosController = require('../controllers/productos.controller.js')
 
 const router = Router()
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
-        const productos = productosController.getAll()
+        const productos = await productosController.getAll()
         res.status(200).send(productos)
     } catch (error) {
         res.status(500).send('Ups! hubo un problema! Volve a intentarlo mas tarde.')
@@ -14,9 +14,9 @@ router.get('/', (req, res, next) => {
     next()
 })
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
-        const producto = productosController.getById(req.params.id)
+        const producto = await productosController.getById(req.params.id)
         if (producto == undefined) {
             res.status(401).send({ mensaje: `No existe el producto con el id ${req.params.id}` })
         } else {
@@ -31,8 +31,8 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
     try {
         const producto = {
-            titulo: req.body.titulo,
-            precio: req.body.precio,
+            title: req.body.title,
+            price: req.body.price,
             logo: req.body.logo
         }
         const { error } = ProductosSchema.validate(producto)
