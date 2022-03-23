@@ -26,10 +26,16 @@ const deleteProduct = async (id) => {
     return producto
 }
 
+const generateRandomProduct = async () => {
+    const productos = await _productServices.generateRandomProducts()    
+    return productos
+}
+
 module.exports = {
     getAll,
     getById,
     createProduct,
     editProduct,
-    deleteProduct
+    deleteProduct,
+    generateRandomProduct
 }

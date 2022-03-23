@@ -15,6 +15,11 @@ router.get('/productos', async (req, res) => {
     res.render('productos', { productos })
 })
 
+router.get('/productosTest', async (req, res) => {
+    const productos = await _productServices.generateRandomProducts()
+    res.render('productos', { productos })
+})
+
 router.get('/nuevoProducto', async (req, res) => {
     const productos = await _productServices.getAll()
     const mensajes = await _messagesServices.getAll()
